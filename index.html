@@ -1,16 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>أقوى استراتيجية في عالم الأوبشن</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     body {
@@ -19,28 +18,39 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 0;
-      margin: 0;
+      padding: 20px;
       background-attachment: fixed;
-      font-family: 'Cairo', sans-serif;
-      overflow: auto;
     }
 
-    .device-container {
-      width: 100%;
-      height: 100%;
-      max-width: 414px;
-      max-height: 896px;
-      position: relative;
+    .phone-frame {
+      width: 375px;
+      height: 812px;
+      border-radius: 40px;
       overflow: hidden;
-      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(255, 215, 0, 0.3);
+      border: 8px solid #ffd700;
+      background: #000;
+    }
+
+    .frame-glow {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 45px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 
+                  0 0 40px rgba(0, 191, 255, 0.3),
+                  0 0 60px rgba(255, 215, 0, 0.2);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .screen {
       background: linear-gradient(145deg, #0f0f23, #1a1a40);
-      width: 100%;
-      min-height: 100vh;
-      overflow: auto;
+      height: 100%;
+      overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -52,45 +62,51 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: radial-gradient(circle at 50% 20%, rgba(0, 191, 255, 0.15), transparent 35%),
-                  radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.15), transparent 35%);
+      background: radial-gradient(circle at 50% 20%, rgba(0, 191, 255, 0.1), transparent 30%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1), transparent 30%);
       pointer-events: none;
     }
 
     .page {
-      width: 100%;
-      min-height: 100vh;
-      padding: 28px;
+      height: 100%;
+      padding: 25px;
+      overflow-y: auto;
       display: none;
-      direction: rtl;
       opacity: 0;
-      transform: translateX(0);
-      transition: opacity 0.3s ease;
+      transform: translateX(40px);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      direction: rtl;
     }
 
     .page.active {
       display: block;
       opacity: 1;
+      transform: translateX(0);
+    }
+
+    .page.next {
+      transform: translateX(-40px);
+      opacity: 0;
     }
 
     .page-title {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       background: linear-gradient(45deg, #ffd700, #ff6b6b, #00bfff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       text-align: center;
       line-height: 1.4;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
     .content {
-      font-size: 18px;
-      line-height: 2.1;
+      font-size: 17px;
+      line-height: 2;
       color: #e0f7fa;
-      margin-bottom: 28px;
+      margin-bottom: 25px;
       text-align: justify;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
@@ -101,17 +117,17 @@
     }
 
     .content ul, .content ol {
-      margin: 18px 0 18px 35px;
-      line-height: 2.3;
+      margin: 15px 0 15px 30px;
+      line-height: 2.2;
     }
 
     .image-container {
       width: 100%;
-      border-radius: 18px;
-      margin: 30px 0;
+      border-radius: 16px;
+      margin: 25px 0;
       overflow: hidden;
-      border: 3px solid #00bfff;
-      box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+      border: 2px solid #00bfff;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
     }
 
     .image-container img {
@@ -119,8 +135,6 @@
       height: auto;
       display: block;
       transition: transform 0.3s ease;
-      max-width: 100%;
-      height: auto;
     }
 
     .image-container:hover img {
@@ -128,37 +142,37 @@
     }
 
     .image-caption {
-      background: rgba(0, 191, 255, 0.25);
+      background: rgba(0, 191, 255, 0.2);
       color: #80deea;
-      padding: 12px;
-      font-size: 15px;
+      padding: 10px;
+      font-size: 14px;
       text-align: center;
-      border-top: 2px solid rgba(0, 191, 255, 0.4);
+      border-top: 1px solid rgba(0, 191, 255, 0.3);
     }
 
     .btn-container {
       display: flex;
       justify-content: space-between;
-      margin-top: 35px;
-      padding: 30px 0 15px;
+      margin-top: 30px;
+      padding: 25px 0 10px;
     }
 
     .btn {
-      padding: 18px 35px;
+      padding: 16px 30px;
       border: none;
-      border-radius: 55px;
-      font-size: 18px;
+      border-radius: 50px;
+      font-size: 17px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.4s ease;
       flex: 1;
-      margin: 0 10px;
+      margin: 0 8px;
       text-align: center;
       position: relative;
       overflow: hidden;
       background: linear-gradient(45deg, #00bfff, #0099cc);
       color: white;
-      box-shadow: 0 10px 20px rgba(0, 191, 255, 0.4);
+      box-shadow: 0 8px 15px rgba(0, 191, 255, 0.3);
     }
 
     .btn-prev {
@@ -166,13 +180,13 @@
     }
 
     .btn:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 25px rgba(0, 191, 255, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0, 191, 255, 0.4);
     }
 
     .btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 6px 15px rgba(0, 191, 255, 0.4);
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(0, 191, 255, 0.3);
     }
 
     .btn::before {
@@ -182,7 +196,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       transition: left 0.8s;
     }
 
@@ -191,14 +205,14 @@
     }
 
     .btn-prev::before {
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     }
 
     .btn:disabled {
       background: linear-gradient(45deg, #333344, #222233);
       color: #666677;
       cursor: not-allowed;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       transform: none;
     }
 
@@ -207,12 +221,12 @@
     }
 
     .progress {
-      height: 8px;
+      height: 6px;
       background: linear-gradient(90deg, #1a1a40, #0f0f23);
-      border-radius: 4px;
-      margin-bottom: 35px;
+      border-radius: 3px;
+      margin-bottom: 30px;
       overflow: hidden;
-      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3) inset;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.2) inset;
     }
 
     .progress-bar {
@@ -220,181 +234,158 @@
       background: linear-gradient(90deg, #00bfff, #0088cc, #ffd700);
       width: 20%;
       transition: width 0.6s ease;
-      border-radius: 4px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
     }
 
     .progress-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .progress-text {
       color: #ffd700;
-      font-size: 16px;
-      font-weight: 700;
-      margin: 0 12px;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 10px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     .social-icons {
       display: flex;
       justify-content: center;
-      gap: 25px;
-      margin-top: 25px;
+      gap: 20px;
+      margin-top: 20px;
     }
 
     .social-icon {
-      width: 65px;
-      height: 65px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #00bfff, #0088cc);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 26px;
+      font-size: 24px;
+      color: white;
       text-decoration: none;
       transition: all 0.4s ease;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 15px rgba(0, 191, 255, 0.3);
+      font-weight: bold;
     }
 
     .social-icon:hover {
-      transform: translateY(-6px) scale(1.12);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 25px rgba(0, 191, 255, 0.4);
+      background: linear-gradient(135deg, #ffd700, #ff6b00);
     }
 
     .logo {
-      width: 110px;
-      height: 110px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      margin: 35px auto;
-      background: #000;
+      margin: 30px auto;
+      background: linear-gradient(135deg, #1a1a40, #0f0f23);
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
-      border: 4px solid #00bfff;
-      box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
-    }
-
-    .logo::before {
-      content: '';
-      position: absolute;
-      width: 85%;
-      height: 85%;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #1a1a40, #0f0f23);
-      z-index: 1;
-    }
-
-    .logo::after {
-      content: 'SB';
-      position: absolute;
-      font-size: 32px;
-      font-weight: 800;
-      background: linear-gradient(45deg, #ffd700, #00bfff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      z-index: 2;
+      color: #ffd700;
+      font-size: 14px;
+      text-align: center;
+      border: 3px solid #00bfff;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
     }
 
     .platform-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin: 18px 0;
+      gap: 10px;
+      margin: 15px 0;
     }
 
     .platform-item {
-      background: rgba(255, 215, 0, 0.25);
-      border: 2px solid rgba(255, 215, 0, 0.4);
-      border-radius: 10px;
-      padding: 10px 15px;
-      font-size: 15px;
+      background: rgba(255, 215, 0, 0.2);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
       color: #ffd700;
       font-weight: bold;
     }
 
     .result-item {
-      background: rgba(0, 191, 255, 0.15);
-      border: 2px solid rgba(0, 191, 255, 0.4);
-      border-radius: 12px;
-      padding: 14px;
-      margin: 12px 0;
-      font-size: 16px;
+      background: rgba(0, 191, 255, 0.1);
+      border: 1px solid rgba(0, 191, 255, 0.3);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 15px;
       color: #80deea;
     }
 
     .result-success {
-      background: rgba(0, 255, 0, 0.15);
-      border: 2px solid rgba(0, 255, 0, 0.4);
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid rgba(0, 255, 0, 0.3);
       color: #00ff00;
     }
 
-    .features-list {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
-      padding: 25px;
-      margin: 25px 0;
-      border: 2px solid rgba(255, 255, 255, 0.4);
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
     }
 
-    .features-list h3 {
-      color: #ffffff;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: 700;
+    .animated-element {
+      animation: float 6s ease-in-out infinite;
     }
 
-    .feature-item {
-      color: #ffffff;
-      margin: 15px 0;
-      font-size: 17px;
-      display: flex;
-      align-items: center;
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    .feature-item::before {
-      content: '✦';
-      color: #ffd700;
-      margin-left: 12px;
-      font-weight: bold;
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
     }
 
     /* Responsive adjustments */
-    @media (max-width: 375px) {
+    @media (max-width: 400px) {
+      .phone-frame {
+        width: 320px;
+        height: 700px;
+        border-radius: 30px;
+        border-width: 6px;
+      }
+      
       .page-title {
-        font-size: 26px;
+        font-size: 22px;
       }
       
       .content {
-        font-size: 17px;
-        line-height: 2;
+        font-size: 16px;
+        line-height: 1.8;
       }
       
       .btn {
-        padding: 16px 30px;
-        font-size: 17px;
+        padding: 14px 20px;
+        font-size: 16px;
       }
       
       .social-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-      }
-      
-      .logo {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="device-container">
+  <div class="phone-frame">
+    <div class="frame-glow"></div>
     <div class="screen">
       <div class="screen-glow"></div>
       <!-- Progress Bar -->
@@ -407,7 +398,7 @@
 
       <!-- Page 1: المقدمة -->
       <div class="page active" id="page1">
-        <h1 class="page-title">أقوى استراتيجية في عالم الأوبشن</h1>
+        <h1 class="page-title animated-element">أقوى استراتيجية في عالم الأوبشن</h1>
         <div class="content">
           <p>
             مرحبًا بك في واحدة من <span class="highlight">أقوى الاستراتيجيات</span> التي ستحوّل تداولك إلى مصدر دخل مستقر ومضمون. هذه الاستراتيجية ليست مجرد فكرة عابرة، بل هي نتيجة سنوات من التحليل والتجارب الناجحة في أسواق العملات الرقمية.
@@ -437,7 +428,7 @@
           </div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/Dww90Cm_d.jpeg" alt="تحديد منطقة الدخول">
+          <img src="https://i.imgur.com/Dww90Cm_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تحديد منطقة الدخول">
           <div class="image-caption">كيفية تحديد منطقة الدخول باستخدام مستويات الفيبوناتشي</div>
         </div>
         <div class="btn-container">
@@ -468,7 +459,7 @@
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/kRTbkoK_d.jpeg" alt="مكان أداة الفيبوناتشي">
+          <img src="https://i.imgur.com/kRTbkoK_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="مكان أداة الفيبوناتشي">
           <div class="image-caption">مكان أداة الفيبوناتشي في المنصة</div>
         </div>
         <div class="btn-container">
@@ -496,15 +487,15 @@
             <li>استخدم فريم <span class="highlight">5 دقائق</span> لتوقيت الدخول بدقة.</li>
           </ul>
           <p>
-            <span class="highlight">الصبر هو سر النجاح!</span> لا تتسرع في الدخول قبل تأكيد اكتمال الشمعة.
+            <span class="highlight">الصبر هو سر النجاح!</span> لا تتسرع في الدخول قبل تأكيد اكتمال الشمعة. التسرع هو أكبر سبب للخسارة حتى مع أفضل الاستراتيجيات.
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/mHIW201_d.jpeg" alt="فتح صفقة شراء">
+          <img src="https://i.imgur.com/mHIW201_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة شراء">
           <div class="image-caption">فتح صفقة شراء عند الارتداد من مستوى الفيبوناتشي</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/Ml4z19e_d.jpeg" alt="فتح صفقة بيع">
+          <img src="https://i.imgur.com/Ml4z19e_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة بيع">
           <div class="image-caption">فتح صفقة بيع عند الارتداد من مستوى الفيبوناتشي</div>
         </div>
         <div class="btn-container">
@@ -521,9 +512,9 @@
             <span class="highlight">أفضل طرق لتفادي الخسارة:</span>
           </p>
           <ul>
+            <li>لا تتداول في أوقات الأخبار المهمة.</li>
             <li>تجنب الدخول عند تداخل مستويات متعددة دون تأكيد.</li>
             <li>استخدم أوامر وقف الخسارة عند كسر الشمعة السابقة.</li>
-            <li>لا تتداول بعواطف أو عند الشعور بالضغط النفسي.</li>
           </ul>
           <p>
             <span class="highlight">لماذا تفشل بعض الصفقات رغم صحة التحليل؟</span><br>
@@ -534,33 +525,33 @@
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/iqd8jjg_d.jpeg" alt="تأخير في الفتح">
+          <img src="https://i.imgur.com/iqd8jjg_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تأخير في الفتح">
           <div class="image-caption">فتحنا الصفقة بعد تأخر قليل عن الفتح المثالي</div>
         </div>
         <div class="result-item result-success">
             ✓ ربح بعد 5 دقائق من فتح الصفقة
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/AOjG8lG_d.jpeg" alt="نتيجة ربح">
+          <img src="https://i.imgur.com/AOjG8lG_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة ربح">
           <div class="image-caption">النتيجة: ربح بعد 5 دقائق من فتح الصفقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/oazNloS_d.jpeg" alt="صفقة بيع 15 دقيقة">
+          <img src="https://i.imgur.com/oazNloS_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة بيع 15 دقيقة">
           <div class="image-caption">صفقة بيع في تلك المنطقة بمدة 15 دقيقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/iAxjBYM_d.jpeg" alt="نتيجة صفقة بيع">
+          <img src="https://i.imgur.com/iAxjBYM_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة بيع">
           <div class="image-caption">النتيجة: ربح من صفقة بيع 15 دقيقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/bvsTMgR_d.jpeg" alt="صفقة شراء">
+          <img src="https://i.imgur.com/bvsTMgR_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة شراء">
           <div class="image-caption">صفقة شراء في منطقة الفيبوناتشي</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/pefNp8Y_d.jpeg" alt="نتيجة صفقة شراء">
+          <img src="https://i.imgur.com/pefNp8Y_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة شراء">
           <div class="image-caption">النتيجة: ربح من صفقة شراء</div>
         </div>
-        <p style="text-align: center; color: #00ff00; font-weight: bold; margin-top: 18px;">
+        <p style="text-align: center; color: #00ff00; font-weight: bold; margin-top: 15px;">
             جميع النتائج أعلاه كانت رابحة!
         </p>
         <div class="btn-container">
@@ -572,40 +563,35 @@
       <!-- Page 5: المعلومات -->
       <div class="page" id="page5">
         <h1 class="page-title">معلومات التواصل</h1>
-        <div class="logo"></div>
+        <div class="logo animated-element">
+          <!-- هنا توضع الصورة رقم 7 (الشعار الشخصي) -->
+          [شعارك هنا]
+        </div>
         <div class="content">
           <p class="thank-you-text">شكرًا لثقتك واهتمامك!</p>
-          <p style="text-align: center; font-size: 19px; font-weight: 600; color: #80deea;">
+          <p style="text-align: center; font-size: 18px; font-weight: 600; color: #80deea;">
             نتمنى لك التوفيق والنجاح في رحلتك في عالم التداول.
           </p>
         </div>
         
         <div class="features-list">
-          <h3>ميزات حصرية متاحة</h3>
+          <h3 style="color: #ffd700; text-align: center; margin-bottom: 15px; font-size: 18px;">ميزات حصرية متاحة</h3>
           <div class="feature-item">بوتات تنفيذ تلقائي للصفقات بدقة فائقة</div>
           <div class="feature-item">أدوات تحليل متقدمة غير متوفرة على المنصات العادية</div>
           <div class="feature-item">تنبيهات فورية عند تشكل الأنماط المثالية</div>
           <div class="feature-item">تحديثات يومية وتحليلات حصرية</div>
         </div>
         
-        <p style="text-align: center; margin: 25px 0 20px; color: #e0f7fa; font-size: 17px;">
+        <p style="text-align: center; margin: 20px 0 15px; color: #e0f7fa; font-size: 16px;">
           تابعوني على منصات التواصل الاجتماعي للحصول على التحديثات والتحليلات اليومية.
         </p>
         
         <div class="social-icons">
-          <a href="https://web.facebook.com/profile.php?id=100092998067167" class="social-icon" id="facebookBtn" target="_blank">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" viewBox="0 0 16 16">
-              <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603 0 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-            </svg>
-          </a>
-          <a href="https://www.instagram.com/salah__badi__19/?hl=en" class="social-icon" id="instagramBtn" target="_blank" style="background: #e4405f; box-shadow: 0 0 20px rgba(228, 64, 95, 0.6);">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" viewBox="0 0 16 16">
-              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372.853.039 1.125.048 3.298.048s2.445-.01 3.298-.048c.852-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942.039-.853.047-1.125.047-3.298s-.01-2.445-.047-3.298c-.04-.853-.175-1.434-.372-1.943a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.445.01 10.173 0 8 0zm0 1.735a6.26 6.26 0 0 1 5.389 3.194A7.523 7.523 0 0 1 14.986 8c0 1.25-.18 2.45-.51 3.562A6.25 6.25 0 0 1 8 14.735a6.25 6.25 0 0 1-6.25-6.25A7.524 7.524 0 0 1 3.014 5c.42-.963.97-1.845 1.635-2.606A6.26 6.26 0 0 1 8 1.735zM8 2.907a5.04 5.04 0 0 0-4.464 2.462A6.656 6.656 0 0 0 2.93 8c0 .96.18 1.88.51 2.735A5.04 5.04 0 0 0 8 13.093a5.04 5.04 0 0 0 4.464-2.462A6.656 6.656 0 0 0 13.07 8c0-.96-.18-1.88-.51-2.735A5.04 5.04 0 0 0 8 2.907zm0 2.22a2.87 2.87 0 1 1 0 5.74 2.87 2.87 0 0 1 0-5.74zm0 1.435a1.435 1.435 0 1 0 0 2.87 1.435 1.435 0 0 0 0-2.87z"/>
-            </svg>
-          </a>
+          <a href="https://web.facebook.com/profile.php?id=100092998067167" class="social-icon" id="facebookBtn" target="_blank">f</a>
+          <a href="https://www.instagram.com/salah__badi__19/?hl=en" class="social-icon" id="instagramBtn" target="_blank">i</a>
         </div>
         
-        <div class="content" style="margin-top: 30px; font-size: 15px; color: #808080; text-align: center;">
+        <div class="content" style="margin-top: 25px; font-size: 14px; color: #808080; text-align: center;">
           <p>
             هذا المحتوى لأغراض تعليمية فقط. التداول ينطوي على مخاطر عالية. استشر مستشارًا ماليًا قبل اتخاذ أي قرارات استثمارية.
           </p>
@@ -637,18 +623,21 @@
         const nextPageEl = document.getElementById(`page${currentPage + 1}`);
 
         if (currentPage < totalPages) {
-          // Hide current page
-          currentPageEl.style.display = 'none';
+          currentPageEl.classList.remove('active');
+          currentPageEl.classList.add('next');
           
-          // Show next page
-          currentPage++;
-          nextPageEl.style.display = 'block';
-          
-          // Update progress
-          updateProgress();
-          
-          // Scroll to top
-          window.scrollTo(0, 0);
+          setTimeout(() => {
+            currentPageEl.style.display = 'none';
+            currentPageEl.classList.remove('next');
+            
+            currentPage++;
+            nextPageEl.style.display = 'block';
+            setTimeout(() => {
+              nextPageEl.classList.add('active');
+            }, 50);
+            
+            updateProgress();
+          }, 500);
         }
       }
     }
@@ -660,18 +649,25 @@
         const prevPageEl = document.getElementById(`page${currentPage - 1}`);
 
         if (currentPage > 1) {
-          // Hide current page
-          currentPageEl.style.display = 'none';
+          currentPageEl.classList.remove('active');
+          currentPageEl.style.transform = 'translateX(40px)';
           
-          // Show previous page
-          currentPage--;
-          prevPageEl.style.display = 'block';
-          
-          // Update progress
-          updateProgress();
-          
-          // Scroll to top
-          window.scrollTo(0, 0);
+          setTimeout(() => {
+            currentPageEl.style.display = 'none';
+            
+            currentPage--;
+            prevPageEl.style.display = 'block';
+            prevPageEl.style.opacity = '0';
+            prevPageEl.style.transform = 'translateX(-40px)';
+            
+            setTimeout(() => {
+              prevPageEl.classList.add('active');
+              prevPageEl.style.opacity = '1';
+              prevPageEl.style.transform = 'translateX(0)';
+            }, 50);
+            
+            updateProgress();
+          }, 500);
         }
       }
     }
@@ -680,11 +676,11 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    document.addEventListener('touchstart', function(e) {
+    document.querySelector('.screen').addEventListener('touchstart', function(e) {
       touchStartX = e.changedTouches[0].screenX;
     }, false);
 
-    document.addEventListener('touchend', function(e) {
+    document.querySelector('.screen').addEventListener('touchend', function(e) {
       touchEndX = e.changedTouches[0].screenX;
       handleSwipe();
     }, false);
@@ -718,20 +714,6 @@
         prevPage(currentPage);
       }
     });
-
-    // Initialize all pages
-    document.querySelectorAll('.page').forEach((page, index) => {
-      if (index === 0) {
-        page.style.display = 'block';
-      } else {
-        page.style.display = 'none';
-      }
-    });
-
-    // Make sure body and html are full height
-    document.documentElement.style.height = '100%';
-    document.body.style.height = '100%';
-    document.body.style.overflow = 'auto';
 
     // Initialize progress bar
     updateProgress();
