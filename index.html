@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -22,7 +23,7 @@
       margin: 0;
       background-attachment: fixed;
       font-family: 'Cairo', sans-serif;
-      overflow: hidden;
+      overflow: auto;
     }
 
     .device-container {
@@ -32,16 +33,14 @@
       max-height: 896px;
       position: relative;
       overflow: hidden;
-      border-radius: 0;
-      border: none;
-      box-shadow: none;
+      margin: 0 auto;
     }
 
     .screen {
       background: linear-gradient(145deg, #0f0f23, #1a1a40);
       width: 100%;
-      height: 100%;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow: auto;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -60,24 +59,18 @@
 
     .page {
       width: 100%;
-      min-height: 100%;
+      min-height: 100vh;
       padding: 28px;
       display: none;
-      opacity: 0;
-      transform: translateX(50px);
-      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       direction: rtl;
+      opacity: 0;
+      transform: translateX(0);
+      transition: opacity 0.3s ease;
     }
 
     .page.active {
       display: block;
       opacity: 1;
-      transform: translateX(0);
-    }
-
-    .page.next {
-      transform: translateX(-50px);
-      opacity: 0;
     }
 
     .page-title {
@@ -126,10 +119,12 @@
       height: auto;
       display: block;
       transition: transform 0.3s ease;
+      max-width: 100%;
+      height: auto;
     }
 
     .image-container:hover img {
-      transform: scale(1.08);
+      transform: scale(1.05);
     }
 
     .image-caption {
@@ -369,47 +364,6 @@
       font-weight: bold;
     }
 
-    /* Animations */
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-12px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .animated-element {
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .pulse {
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.8); }
-      70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-    }
-
-    /* Remove all restrictions for smooth scrolling */
-    .page {
-      overflow-y: auto !important;
-      height: auto !important;
-      min-height: 100vh !important;
-      position: static !important;
-      transform: none !important;
-      opacity: 1 !important;
-      display: block !important;
-    }
-
-    /* Show only active page */
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
     /* Responsive adjustments */
     @media (max-width: 375px) {
       .page-title {
@@ -453,7 +407,7 @@
 
       <!-- Page 1: المقدمة -->
       <div class="page active" id="page1">
-        <h1 class="page-title animated-element">أقوى استراتيجية في عالم الأوبشن</h1>
+        <h1 class="page-title">أقوى استراتيجية في عالم الأوبشن</h1>
         <div class="content">
           <p>
             مرحبًا بك في واحدة من <span class="highlight">أقوى الاستراتيجيات</span> التي ستحوّل تداولك إلى مصدر دخل مستقر ومضمون. هذه الاستراتيجية ليست مجرد فكرة عابرة، بل هي نتيجة سنوات من التحليل والتجارب الناجحة في أسواق العملات الرقمية.
@@ -483,7 +437,7 @@
           </div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/Dww90Cm_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تحديد منطقة الدخول">
+          <img src="https://i.imgur.com/Dww90Cm_d.jpeg" alt="تحديد منطقة الدخول">
           <div class="image-caption">كيفية تحديد منطقة الدخول باستخدام مستويات الفيبوناتشي</div>
         </div>
         <div class="btn-container">
@@ -514,7 +468,7 @@
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/kRTbkoK_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="مكان أداة الفيبوناتشي">
+          <img src="https://i.imgur.com/kRTbkoK_d.jpeg" alt="مكان أداة الفيبوناتشي">
           <div class="image-caption">مكان أداة الفيبوناتشي في المنصة</div>
         </div>
         <div class="btn-container">
@@ -546,11 +500,11 @@
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/mHIW201_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة شراء">
+          <img src="https://i.imgur.com/mHIW201_d.jpeg" alt="فتح صفقة شراء">
           <div class="image-caption">فتح صفقة شراء عند الارتداد من مستوى الفيبوناتشي</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/Ml4z19e_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة بيع">
+          <img src="https://i.imgur.com/Ml4z19e_d.jpeg" alt="فتح صفقة بيع">
           <div class="image-caption">فتح صفقة بيع عند الارتداد من مستوى الفيبوناتشي</div>
         </div>
         <div class="btn-container">
@@ -580,30 +534,30 @@
           </p>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/iqd8jjg_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تأخير في الفتح">
+          <img src="https://i.imgur.com/iqd8jjg_d.jpeg" alt="تأخير في الفتح">
           <div class="image-caption">فتحنا الصفقة بعد تأخر قليل عن الفتح المثالي</div>
         </div>
         <div class="result-item result-success">
             ✓ ربح بعد 5 دقائق من فتح الصفقة
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/AOjG8lG_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة ربح">
+          <img src="https://i.imgur.com/AOjG8lG_d.jpeg" alt="نتيجة ربح">
           <div class="image-caption">النتيجة: ربح بعد 5 دقائق من فتح الصفقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/oazNloS_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة بيع 15 دقيقة">
+          <img src="https://i.imgur.com/oazNloS_d.jpeg" alt="صفقة بيع 15 دقيقة">
           <div class="image-caption">صفقة بيع في تلك المنطقة بمدة 15 دقيقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/iAxjBYM_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة بيع">
+          <img src="https://i.imgur.com/iAxjBYM_d.jpeg" alt="نتيجة صفقة بيع">
           <div class="image-caption">النتيجة: ربح من صفقة بيع 15 دقيقة</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/bvsTMgR_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة شراء">
+          <img src="https://i.imgur.com/bvsTMgR_d.jpeg" alt="صفقة شراء">
           <div class="image-caption">صفقة شراء في منطقة الفيبوناتشي</div>
         </div>
         <div class="image-container">
-          <img src="https://i.imgur.com/pefNp8Y_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة شراء">
+          <img src="https://i.imgur.com/pefNp8Y_d.jpeg" alt="نتيجة صفقة شراء">
           <div class="image-caption">النتيجة: ربح من صفقة شراء</div>
         </div>
         <p style="text-align: center; color: #00ff00; font-weight: bold; margin-top: 18px;">
@@ -618,7 +572,7 @@
       <!-- Page 5: المعلومات -->
       <div class="page" id="page5">
         <h1 class="page-title">معلومات التواصل</h1>
-        <div class="logo animated-element"></div>
+        <div class="logo"></div>
         <div class="content">
           <p class="thank-you-text">شكرًا لثقتك واهتمامك!</p>
           <p style="text-align: center; font-size: 19px; font-weight: 600; color: #80deea;">
@@ -765,7 +719,7 @@
       }
     });
 
-    // Initialize all pages to be scrollable
+    // Initialize all pages
     document.querySelectorAll('.page').forEach((page, index) => {
       if (index === 0) {
         page.style.display = 'block';
