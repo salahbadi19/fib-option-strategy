@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>أقوى استراتيجية في عالم الأوبشن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #000000, #1a1a2e);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      background-attachment: fixed;
+      font-family: 'Cairo', sans-serif;
+      overflow: hidden;
+    }
+
+    .device-container {
+      width: 100%;
+      height: 100%;
+      max-width: 414px;
+      max-height: 896px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen {
+      background: linear-gradient(145deg, #0f0f23, #1a1a40);
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .screen-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(0, 191, 255, 0.15), transparent 35%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.15), transparent 35%);
+      pointer-events: none;
+    }
+
+    .page {
+      height: 100%;
+      padding: 28px;
+      overflow-y: auto;
+      display: none;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      direction: rtl;
+    }
+
+    .page.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .page.next {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(45deg, #ffd700, #ff6b6b, #00bfff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 30px;
+      text-align: center;
+      line-height: 1.4;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 2.1;
+      color: #e0f7fa;
+      margin-bottom: 28px;
+      text-align: justify;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .highlight {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .content ul, .content ol {
+      margin: 18px 0 18px 35px;
+      line-height: 2.3;
+    }
+
+    .image-container {
+      width: 100%;
+      border-radius: 18px;
+      margin: 30px 0;
+      overflow: hidden;
+      border: 3px solid #00bfff;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover img {
+      transform: scale(1.08);
+    }
+
+    .image-caption {
+      background: rgba(0, 191, 255, 0.25);
+      color: #80deea;
+      padding: 12px;
+      font-size: 15px;
+      text-align: center;
+      border-top: 2px solid rgba(0, 191, 255, 0.4);
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 35px;
+      padding: 30px 0 15px;
+    }
+
+    .btn {
+      padding: 18px 35px;
+      border: none;
+      border-radius: 55px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      flex: 1;
+      margin: 0 10px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(45deg, #00bfff, #0099cc);
+      color: white;
+      box-shadow: 0 10px 20px rgba(0, 191, 255, 0.4);
+    }
+
+    .btn-prev {
+      background: linear-gradient(45deg, #666699, #444466);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 25px rgba(0, 191, 255, 0.5);
+    }
+
+    .btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 6px 15px rgba(0, 191, 255, 0.4);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.8s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-prev::before {
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+
+    .btn:disabled {
+      background: linear-gradient(45deg, #333344, #222233);
+      color: #666677;
+      cursor: not-allowed;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      transform: none;
+    }
+
+    .btn:disabled::before {
+      display: none;
+    }
+
+    .progress {
+      height: 8px;
+      background: linear-gradient(90deg, #1a1a40, #0f0f23);
+      border-radius: 4px;
+      margin-bottom: 35px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.3) inset;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00bfff, #0088cc, #ffd700);
+      width: 20%;
+      transition: width 0.6s ease;
+      border-radius: 4px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .progress-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .progress-text {
+      color: #ffd700;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 12px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .social-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 26px;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-icon:hover {
+      transform: translateY(-6px) scale(1.12);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      margin: 35px auto;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      border: 4px solid #00bfff;
+      box-shadow: 0 0 25px rgba(0, 191, 255, 0.4);
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      width: 85%;
+      height: 85%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a40, #0f0f23);
+      z-index: 1;
+    }
+
+    .logo::after {
+      content: 'SB';
+      position: absolute;
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(45deg, #ffd700, #00bfff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      z-index: 2;
+    }
+
+    .platform-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .platform-item {
+      background: rgba(255, 215, 0, 0.25);
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      border-radius: 10px;
+      padding: 10px 15px;
+      font-size: 15px;
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .result-item {
+      background: rgba(0, 191, 255, 0.15);
+      border: 2px solid rgba(0, 191, 255, 0.4);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 12px 0;
+      font-size: 16px;
+      color: #80deea;
+    }
+
+    .result-success {
+      background: rgba(0, 255, 0, 0.15);
+      border: 2px solid rgba(0, 255, 0, 0.4);
+      color: #00ff00;
+    }
+
+    .features-list {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 25px;
+      margin: 25px 0;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .features-list h3 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .feature-item {
+      color: #ffffff;
+      margin: 15px 0;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+    }
+
+    .feature-item::before {
+      content: '✦';
+      color: #ffd700;
+      margin-left: 12px;
+      font-weight: bold;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .animated-element {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.8); }
+      70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+    }
+
+    /* Remove all borders and frames */
+    .device-container, .screen {
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Enable scrolling */
+    .page {
+      overflow-y: auto !important;
+      height: auto !important;
+      min-height: 100%;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 375px) {
+      .page-title {
+        font-size: 26px;
+      }
+      
+      .content {
+        font-size: 17px;
+        line-height: 2;
+      }
+      
+      .btn {
+        padding: 16px 30px;
+        font-size: 17px;
+      }
+      
+      .social-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+      }
+      
+      .logo {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <div class="screen">
+      <div class="screen-glow"></div>
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-text"><span id="currentPage">1</span>/5</div>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- Page 1: المقدمة -->
+      <div class="page active" id="page1">
+        <h1 class="page-title animated-element">أقوى استراتيجية في عالم الأوبشن</h1>
+        <div class="content">
+          <p>
+            مرحبًا بك في واحدة من <span class="highlight">أقوى الاستراتيجيات</span> التي ستحوّل تداولك إلى مصدر دخل مستقر ومضمون. هذه الاستراتيجية ليست مجرد فكرة عابرة، بل هي نتيجة سنوات من التحليل والتجارب الناجحة في أسواق العملات الرقمية.
+          </p>
+          <p>
+            تعتمد هذه الاستراتيجية بالكامل على مستويات <span class="highlight">فيبوناتشي</span> فقط، وخاصة المستويات الثلاثة السحرية: <span class="highlight">0، 0.78، و1.0</span>. هذه المستويات تمثل مناطق انعكاس قوية جدًا، حيث يرتد السعر منها بنسبة تزيد عن <span class="highlight">99%</span> عند تشكيل الشمعة الكاملة.
+          </p>
+          <p>
+            ننصحك بالتركيز على <span class="highlight">العديد من العملات الرقمية</span> المتوفرة في المنصة، وليس البيتكوين والإيثريوم فقط. تشمل هذه العملات:
+          </p>
+          <div class="crypto-list">
+            <span class="crypto-item">بيتكوين (BTC)</span>
+            <span class="crypto-item">إيثريوم (ETH)</span>
+            <span class="crypto-item">بينانس كوين (BNB)</span>
+            <span class="crypto-item">ريبل (XRP)</span>
+            <span class="crypto-item">كاردانو (ADA)</span>
+            <span class="crypto-item">سولانا (SOL)</span>
+          </div>
+          <p>
+            هذه الاستراتيجية ناجحة جدًا على منصات التداول التالية:
+          </p>
+          <div class="platform-list">
+            <span class="platform-item">كوتكس</span>
+            <span class="platform-item">اي كيو ابشن</span>
+            <span class="platform-item">بوكت ابشن</span>
+            <span class="platform-item">منصات أخرى</span>
+          </div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/Dww90Cm_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تحديد منطقة الدخول">
+          <div class="image-caption">كيفية تحديد منطقة الدخول باستخدام مستويات الفيبوناتشي</div>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-prev" disabled>الرجوع</button>
+          <button class="btn btn-next" onclick="nextPage(1)">التالي</button>
+        </div>
+      </div>
+
+      <!-- Page 2: أداة الفيبوناتشي -->
+      <div class="page" id="page2">
+        <h1 class="page-title">شرح أداة الفيبوناتشي</h1>
+        <div class="content">
+          <p>
+            أداة فيبوناتشي هي واحدة من <span class="highlight">أقوى أدوات التحليل الفني</span>، ومتاحة في جميع منصات التداول مثل <span class="highlight">كوتكس، اي كيو ابشن، وبوكت ابشن</span>.
+          </p>
+          <p>
+            <span class="highlight">طريقة استخدام الأداة:</span>
+          </p>
+          <ol>
+            <li>ابحث عن رمز <span class="highlight">Fib</span> أو "فيبوناتشي" في قائمة الأدوات.</li>
+            <li>انقر على <span class="highlight">القاع</span> (أدنى سعر) ثم اسحب إلى <span class="highlight">القمة</span> (أعلى سعر) في الحركة الصاعدة.</li>
+            <li>في الحركة الهابطة، انقر على القمة ثم اسحب إلى القاع.</li>
+            <li>بعد رسم الأداة، ركّز فقط على المستويات التالية: <span class="highlight">0.00، 0.786، و1.000</span>.</li>
+            <li>يمكنك إخفاء باقي المستويات لتقليل التشويش البصري.</li>
+          </ol>
+          <p>
+            هذه المستويات تمثل مناطق دعم ومقاومة طبيعية، وعند وصول السعر إليها، يكون على أعتاب انعكاس قوي جدًا.
+          </p>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/kRTbkoK_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="مكان أداة الفيبوناتشي">
+          <div class="image-caption">مكان أداة الفيبوناتشي في المنصة</div>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-prev" onclick="prevPage(2)">الرجوع</button>
+          <button class="btn btn-next" onclick="nextPage(2)">التالي</button>
+        </div>
+      </div>
+
+      <!-- Page 3: تنفيذ الصفقة -->
+      <div class="page" id="page3">
+        <h1 class="page-title">طريقة تنفيذ الصفقة</h1>
+        <div class="content">
+          <p>
+            <span class="highlight">التوقيت المثالي للدخول:</span> انتظر حتى تكتمل الشمعة عند أحد المستويات (0، 0.78، 1)، ثم ادخل في بداية الشمعة التالية.
+          </p>
+          <p>
+            <span class="highlight">الفريم الزمني الأنسب:</span> ننصح باستخدام فريم <span class="highlight">5 دقائق</span> للدخول، مع مدة صفقة <span class="highlight">15 دقيقة</span>.
+          </p>
+          <p>
+            <span class="highlight">تحليل متعدد الفريمات (Multi Timeframe):</span>
+          </p>
+          <ul>
+            <li>افحص الرسم البياني على فريم <span class="highlight">1 ساعة</span> لتحديد الاتجاه العام.</li>
+            <li>انزل إلى فريم <span class="highlight">15 دقيقة</span> للعثور على مستوى فيبوناتشي المناسب.</li>
+            <li>استخدم فريم <span class="highlight">5 دقائق</span> لتوقيت الدخول بدقة.</li>
+          </ul>
+          <p>
+            <span class="highlight">الصبر هو سر النجاح!</span> لا تتسرع في الدخول قبل تأكيد اكتمال الشمعة.
+          </p>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/mHIW201_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة شراء">
+          <div class="image-caption">فتح صفقة شراء عند الارتداد من مستوى الفيبوناتشي</div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/Ml4z19e_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="فتح صفقة بيع">
+          <div class="image-caption">فتح صفقة بيع عند الارتداد من مستوى الفيبوناتشي</div>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-prev" onclick="prevPage(3)">الرجوع</button>
+          <button class="btn btn-next" onclick="nextPage(3)">التالي</button>
+        </div>
+      </div>
+
+      <!-- Page 4: نصائح النجاح -->
+      <div class="page" id="page4">
+        <h1 class="page-title">نصائح النجاح</h1>
+        <div class="content">
+          <p>
+            <span class="highlight">أفضل طرق لتفادي الخسارة:</span>
+          </p>
+          <ul>
+            <li>تجنب الدخول عند تداخل مستويات متعددة دون تأكيد.</li>
+            <li>استخدم أوامر وقف الخسارة عند كسر الشمعة السابقة.</li>
+            <li>لا تتداول بعواطف أو عند الشعور بالضغط النفسي.</li>
+          </ul>
+          <p>
+            <span class="highlight">لماذا تفشل بعض الصفقات رغم صحة التحليل؟</span><br>
+            لأن التداول ليس فقط علمًا، بل فنًا في إدارة النفس. أحيانًا يتحرك السعر ضدك لبضع ثواني فقط لتفعيل أوامر وقف الخسارة، ثم يعود للاتجاه الصحيح. هذا ما يسمى بـ <span class="highlight">"كمسح أوامر المتداولين"</span>.
+          </p>
+          <p>
+            <span class="highlight">أمثلة واقعية على نتائج الصفقات:</span>
+          </p>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/iqd8jjg_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="تأخير في الفتح">
+          <div class="image-caption">فتحنا الصفقة بعد تأخر قليل عن الفتح المثالي</div>
+        </div>
+        <div class="result-item result-success">
+            ✓ ربح بعد 5 دقائق من فتح الصفقة
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/AOjG8lG_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة ربح">
+          <div class="image-caption">النتيجة: ربح بعد 5 دقائق من فتح الصفقة</div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/oazNloS_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة بيع 15 دقيقة">
+          <div class="image-caption">صفقة بيع في تلك المنطقة بمدة 15 دقيقة</div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/iAxjBYM_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة بيع">
+          <div class="image-caption">النتيجة: ربح من صفقة بيع 15 دقيقة</div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/bvsTMgR_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="صفقة شراء">
+          <div class="image-caption">صفقة شراء في منطقة الفيبوناتشي</div>
+        </div>
+        <div class="image-container">
+          <img src="https://i.imgur.com/pefNp8Y_d.jpeg?maxwidth=520&shape=thumb&fidelity=high" alt="نتيجة صفقة شراء">
+          <div class="image-caption">النتيجة: ربح من صفقة شراء</div>
+        </div>
+        <p style="text-align: center; color: #00ff00; font-weight: bold; margin-top: 18px;">
+            جميع النتائج أعلاه كانت رابحة!
+        </p>
+        <div class="btn-container">
+          <button class="btn btn-prev" onclick="prevPage(4)">الرجوع</button>
+          <button class="btn btn-next" onclick="nextPage(4)">التالي</button>
+        </div>
+      </div>
+
+      <!-- Page 5: المعلومات -->
+      <div class="page" id="page5">
+        <h1 class="page-title">معلومات التواصل</h1>
+        <div class="logo animated-element"></div>
+        <div class="content">
+          <p class="thank-you-text">شكرًا لثقتك واهتمامك!</p>
+          <p style="text-align: center; font-size: 19px; font-weight: 600; color: #80deea;">
+            نتمنى لك التوفيق والنجاح في رحلتك في عالم التداول.
+          </p>
+        </div>
+        
+        <div class="features-list">
+          <h3>ميزات حصرية متاحة</h3>
+          <div class="feature-item">بوتات تنفيذ تلقائي للصفقات بدقة فائقة</div>
+          <div class="feature-item">أدوات تحليل متقدمة غير متوفرة على المنصات العادية</div>
+          <div class="feature-item">تنبيهات فورية عند تشكل الأنماط المثالية</div>
+          <div class="feature-item">تحديثات يومية وتحليلات حصرية</div>
+        </div>
+        
+        <p style="text-align: center; margin: 25px 0 20px; color: #e0f7fa; font-size: 17px;">
+          تابعوني على منصات التواصل الاجتماعي للحصول على التحديثات والتحليلات اليومية.
+        </p>
+        
+        <div class="social-icons">
+          <a href="https://web.facebook.com/profile.php?id=100092998067167" class="social-icon" id="facebookBtn" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" viewBox="0 0 16 16">
+              <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603 0 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/salah__badi__19/?hl=en" class="social-icon" id="instagramBtn" target="_blank" style="background: #e4405f; box-shadow: 0 0 20px rgba(228, 64, 95, 0.6);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" viewBox="0 0 16 16">
+              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372.853.039 1.125.048 3.298.048s2.445-.01 3.298-.048c.852-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942.039-.853.047-1.125.047-3.298s-.01-2.445-.047-3.298c-.04-.853-.175-1.434-.372-1.943a3.917 3.917 0 0 0-.923-1.417A3.927 3.927 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.445.01 10.173 0 8 0zm0 1.735a6.26 6.26 0 0 1 5.389 3.194A7.523 7.523 0 0 1 14.986 8c0 1.25-.18 2.45-.51 3.562A6.25 6.25 0 0 1 8 14.735a6.25 6.25 0 0 1-6.25-6.25A7.524 7.524 0 0 1 3.014 5c.42-.963.97-1.845 1.635-2.606A6.26 6.26 0 0 1 8 1.735zM8 2.907a5.04 5.04 0 0 0-4.464 2.462A6.656 6.656 0 0 0 2.93 8c0 .96.18 1.88.51 2.735A5.04 5.04 0 0 0 8 13.093a5.04 5.04 0 0 0 4.464-2.462A6.656 6.656 0 0 0 13.07 8c0-.96-.18-1.88-.51-2.735A5.04 5.04 0 0 0 8 2.907zm0 2.22a2.87 2.87 0 1 1 0 5.74 2.87 2.87 0 0 1 0-5.74zm0 1.435a1.435 1.435 0 1 0 0 2.87 1.435 1.435 0 0 0 0-2.87z"/>
+            </svg>
+          </a>
+        </div>
+        
+        <div class="content" style="margin-top: 30px; font-size: 15px; color: #808080; text-align: center;">
+          <p>
+            هذا المحتوى لأغراض تعليمية فقط. التداول ينطوي على مخاطر عالية. استشر مستشارًا ماليًا قبل اتخاذ أي قرارات استثمارية.
+          </p>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-prev" onclick="prevPage(5)">الرجوع</button>
+          <button class="btn btn-next" disabled>انتهيت</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Current page tracker
+    let currentPage = 1;
+    const totalPages = 5;
+
+    // Update progress bar and page counter
+    function updateProgress() {
+      const progressPercent = (currentPage / totalPages) * 100;
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+      document.getElementById('currentPage').textContent = currentPage;
+    }
+
+    // Navigate to next page
+    function nextPage(current) {
+      if (current === currentPage) {
+        const currentPageEl = document.getElementById(`page${currentPage}`);
+        const nextPageEl = document.getElementById(`page${currentPage + 1}`);
+
+        if (currentPage < totalPages) {
+          currentPageEl.classList.remove('active');
+          currentPageEl.classList.add('next');
+          
+          setTimeout(() => {
+            currentPageEl.style.display = 'none';
+            currentPageEl.classList.remove('next');
+            
+            currentPage++;
+            nextPageEl.style.display = 'block';
+            setTimeout(() => {
+              nextPageEl.classList.add('active');
+            }, 50);
+            
+            updateProgress();
+            
+            // Scroll to top when changing pages
+            nextPageEl.scrollTop = 0;
+          }, 500);
+        }
+      }
+    }
+
+    // Navigate to previous page
+    function prevPage(current) {
+      if (current === currentPage) {
+        const currentPageEl = document.getElementById(`page${currentPage}`);
+        const prevPageEl = document.getElementById(`page${currentPage - 1}`);
+
+        if (currentPage > 1) {
+          currentPageEl.classList.remove('active');
+          currentPageEl.style.transform = 'translateX(50px)';
+          
+          setTimeout(() => {
+            currentPageEl.style.display = 'none';
+            
+            currentPage--;
+            prevPageEl.style.display = 'block';
+            prevPageEl.style.opacity = '0';
+            prevPageEl.style.transform = 'translateX(-50px)';
+            
+            setTimeout(() => {
+              prevPageEl.classList.add('active');
+              prevPageEl.style.opacity = '1';
+              prevPageEl.style.transform = 'translateX(0)';
+            }, 50);
+            
+            updateProgress();
+            
+            // Scroll to top when changing pages
+            prevPageEl.scrollTop = 0;
+          }, 500);
+        }
+      }
+    }
+
+    // Add touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.querySelector('.screen').addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.querySelector('.screen').addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const minSwipeDistance = 50;
+      const swipeDistance = touchStartX - touchEndX;
+
+      if (Math.abs(swipeDistance) < minSwipeDistance) {
+        return;
+      }
+
+      if (swipeDistance > 0) {
+        // Swipe left - next page
+        if (currentPage < totalPages) {
+          nextPage(currentPage);
+        }
+      } else {
+        // Swipe right - previous page
+        if (currentPage > 1) {
+          prevPage(currentPage);
+        }
+      }
+    }
+
+    // Virtual keyboard navigation (for desktop testing)
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight' && currentPage < totalPages) {
+        nextPage(currentPage);
+      } else if (e.key === 'ArrowLeft' && currentPage > 1) {
+        prevPage(currentPage);
+      }
+    });
+
+    // Initialize progress bar
+    updateProgress();
+
+    // Enable scrolling on pages
+    document.querySelectorAll('.page').forEach(page => {
+      page.style.overflowY = 'auto';
+      page.style.height = 'auto';
+      page.style.minHeight = '100%';
+    });
+
+    // Remove all device frame styling
+    document.querySelector('.device-container').style.border = 'none';
+    document.querySelector('.device-container').style.boxShadow = 'none';
+    document.querySelector('.device-container').style.borderRadius = '0';
+    document.querySelector('.screen').style.border = 'none';
+    document.querySelector('.screen').style.boxShadow = 'none';
+    document.querySelector('.screen').style.borderRadius = '0';
+  </script>
+</body>
+</html>
