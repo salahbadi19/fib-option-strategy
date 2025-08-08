@@ -32,6 +32,9 @@
       max-height: 896px;
       position: relative;
       overflow: hidden;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
     }
 
     .screen {
@@ -56,9 +59,9 @@
     }
 
     .page {
-      height: 100%;
+      width: 100%;
+      min-height: 100%;
       padding: 28px;
-      overflow-y: auto;
       display: none;
       opacity: 0;
       transform: translateX(50px);
@@ -387,20 +390,24 @@
       100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
     }
 
-    /* Remove all borders and frames */
-    .device-container, .screen {
-      border: none !important;
-      box-shadow: none !important;
-      border-radius: 0 !important;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Enable scrolling */
+    /* Remove all restrictions for smooth scrolling */
     .page {
       overflow-y: auto !important;
       height: auto !important;
-      min-height: 100%;
+      min-height: 100vh !important;
+      position: static !important;
+      transform: none !important;
+      opacity: 1 !important;
+      display: block !important;
+    }
+
+    /* Show only active page */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
     }
 
     /* Responsive adjustments */
@@ -676,24 +683,18 @@
         const nextPageEl = document.getElementById(`page${currentPage + 1}`);
 
         if (currentPage < totalPages) {
-          currentPageEl.classList.remove('active');
-          currentPageEl.classList.add('next');
+          // Hide current page
+          currentPageEl.style.display = 'none';
           
-          setTimeout(() => {
-            currentPageEl.style.display = 'none';
-            currentPageEl.classList.remove('next');
-            
-            currentPage++;
-            nextPageEl.style.display = 'block';
-            setTimeout(() => {
-              nextPageEl.classList.add('active');
-            }, 50);
-            
-            updateProgress();
-            
-            // Scroll to top when changing pages
-            nextPageEl.scrollTop = 0;
-          }, 500);
+          // Show next page
+          currentPage++;
+          nextPageEl.style.display = 'block';
+          
+          // Update progress
+          updateProgress();
+          
+          // Scroll to top
+          window.scrollTo(0, 0);
         }
       }
     }
@@ -705,28 +706,18 @@
         const prevPageEl = document.getElementById(`page${currentPage - 1}`);
 
         if (currentPage > 1) {
-          currentPageEl.classList.remove('active');
-          currentPageEl.style.transform = 'translateX(50px)';
+          // Hide current page
+          currentPageEl.style.display = 'none';
           
-          setTimeout(() => {
-            currentPageEl.style.display = 'none';
-            
-            currentPage--;
-            prevPageEl.style.display = 'block';
-            prevPageEl.style.opacity = '0';
-            prevPageEl.style.transform = 'translateX(-50px)';
-            
-            setTimeout(() => {
-              prevPageEl.classList.add('active');
-              prevPageEl.style.opacity = '1';
-              prevPageEl.style.transform = 'translateX(0)';
-            }, 50);
-            
-            updateProgress();
-            
-            // Scroll to top when changing pages
-            prevPageEl.scrollTop = 0;
-          }, 500);
+          // Show previous page
+          currentPage--;
+          prevPageEl.style.display = 'block';
+          
+          // Update progress
+          updateProgress();
+          
+          // Scroll to top
+          window.scrollTo(0, 0);
         }
       }
     }
@@ -735,11 +726,11 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    document.querySelector('.screen').addEventListener('touchstart', function(e) {
+    document.addEventListener('touchstart', function(e) {
       touchStartX = e.changedTouches[0].screenX;
     }, false);
 
-    document.querySelector('.screen').addEventListener('touchend', function(e) {
+    document.addEventListener('touchend', function(e) {
       touchEndX = e.changedTouches[0].screenX;
       handleSwipe();
     }, false);
@@ -774,23 +765,22 @@
       }
     });
 
-    // Initialize progress bar
-    updateProgress();
-
-    // Enable scrolling on pages
-    document.querySelectorAll('.page').forEach(page => {
-      page.style.overflowY = 'auto';
-      page.style.height = 'auto';
-      page.style.minHeight = '100%';
+    // Initialize all pages to be scrollable
+    document.querySelectorAll('.page').forEach((page, index) => {
+      if (index === 0) {
+        page.style.display = 'block';
+      } else {
+        page.style.display = 'none';
+      }
     });
 
-    // Remove all device frame styling
-    document.querySelector('.device-container').style.border = 'none';
-    document.querySelector('.device-container').style.boxShadow = 'none';
-    document.querySelector('.device-container').style.borderRadius = '0';
-    document.querySelector('.screen').style.border = 'none';
-    document.querySelector('.screen').style.boxShadow = 'none';
-    document.querySelector('.screen').style.borderRadius = '0';
+    // Make sure body and html are full height
+    document.documentElement.style.height = '100%';
+    document.body.style.height = '100%';
+    document.body.style.overflow = 'auto';
+
+    // Initialize progress bar
+    updateProgress();
   </script>
 </body>
 </html>
